@@ -1,12 +1,30 @@
 {
-  "pages":[
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#d81e06",
+    "navigationBarTitleText": "电梯呼叫",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#e6e6e6",
+    "selectedColor": "#d81e06",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "客梯",
+        "iconPath": "img/kt2.png",
+        "selectedIconPath": "img/kt.png"
+      },
+      {
+        "pagePath": "pages/index2/index",
+        "text": "货梯",
+        "iconPath": "img/ht2.png",
+        "selectedIconPath": "img/ht.png"
+      }
+    ]
+  },
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
-  ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
-  }
+    "pages/index2/index"
+  ]
 }

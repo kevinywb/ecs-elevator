@@ -13,8 +13,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.1",
-	"appid": "wx17d51cbd68716cae",
-	"projectname": "src",
+	"appid": "wxa24f6e324f1d6168",
+	"projectname": "ecs-elevator",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

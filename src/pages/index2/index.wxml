@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view>
   <view class="row">
-    <view class='col title'>客梯</view>
+    <view class='col title'>货梯</view>
   </view>
   <view class="row">
     <view class="col"></view>

@@ -10,6 +10,10 @@ const moment = require('moment');
 const port = 'COM2';
 const logger = log4js.getLogger();
 const today = moment().format('YYYY-MM-DD');
+const conf = {
+    f: [-1, 15], //起始楼层 - 最高楼层
+    out: [0] //除去楼层
+};
 
 /**
  * serialport
@@ -33,6 +37,7 @@ sp.open(function (err) {
     console.log('Port ' + port + ' is connected.');
 
     sp.on('data', function (data) {
+        let buffer = Buffer.from([0x02, 0x80, 0x03, 0x03, 0x91, 0xFF, 0x80, 0x00, 0xEA, 0x03]);
         logger.info(data);
     });
 });
@@ -46,9 +51,37 @@ exp.get('/', function (req, res) {
     res.send('<h1> Welcome to use the elevator control system.</h1>');
 });
 
-exp.get('/cmd/:cmd', function (req, res) {
-    //req.params.cmd
-    var buffer = Buffer.from([0x02, 0x00, 0x01, 0x06, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x03]);
+exp.get('/f', function (req, res) {
+    let r = false;
+    let f = [];
+    let val = 0;
+    for (let i = conf.f[0]; i <= conf.f[1]; i++) {
+        r = false;
+        for (var j = 0; j < conf.out.length; j++) {
+            if (i === conf.out[j]) {
+                r = true;
+                break;
+            }
+        }
+        if (r) continue;
+        f.push({
+            key: i,
+            val: int2hex(val),
+            text: i.toString().replace('-', 'B')
+        })
+        val++;
+    }
+    res.send(f);
+})
+
+exp.get('/go/:here/:there', function (req, res) {
+    let buffer = Buffer.from([0x02, 0x00, 0x01, 0x06, 0x01, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x03]);
+    buffer[7] = req.params.here;
+    buffer[9] = req.params.there;
+    for (let i = 1; i < 10; i++) {
+        buffer[10] += buffer[i];
+    }
+    buffer[10] = ~buffer[10] + 1;
 
     const data = {
         datetime: new Date().toLocaleString(),
@@ -57,7 +90,7 @@ exp.get('/cmd/:cmd', function (req, res) {
         error: ""
     }
 
-    sp.write(data.cmd, function (err, results) {
+    sp.write(buffer, function (err, results) {
         if (err) {
             logger.error('Cannot write ' + port + '. Error: ' + err);
             return;
@@ -99,3 +132,10 @@ log4js.configure({
         }
     }
 });
+
+/**
+ * utils
+ */
+function int2hex(val) {
+    return '0x' + '00'.substr(0, 2 - val.toString(16).length) + val.toString(16);
+}
