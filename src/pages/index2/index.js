@@ -12,7 +12,7 @@ Page({
     here: 0x00,
     there: 0x00
   },
-  onLoad: function() {
+  onLoad: function () {
     let that = this;
     wx.request({
       url: app.globalData.url + '/f',
@@ -24,10 +24,24 @@ Page({
         that.setData({
           f: res.data.reverse()
         });
+      },
+      fail(err) {
+        wx.showModal({
+          content: '连接异常，请重试',
+          confirmText: '重试',
+          success: function (res) {
+            if (res.cancel) {
+              //点击取消,默认隐藏弹框
+            } else {
+              //点击确定
+              that.onLoad();
+            }
+          }
+        });
       }
     })
   },
-  where: function(e) {
+  where: function (e) {
     let c = this.data.c;
     let f = this.data.f;
     let btnType = this.data.btnType;
@@ -75,7 +89,7 @@ Page({
       there: there
     });
   },
-  go: function() {
+  go: function () {
     let here = this.data.here;
     let there = this.data.there;
     wx.request({
@@ -88,6 +102,7 @@ Page({
         wx.showToast({
           title: '呼叫成功',
           icon: 'success',
+          mask: true,
           duration: 1000
         });
       },
@@ -95,6 +110,7 @@ Page({
         wx.showToast({
           title: '呼叫失败',
           icon: 'cancel',
+          mask: true,
           duration: 1000
         });
       }

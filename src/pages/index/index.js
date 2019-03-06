@@ -24,6 +24,20 @@ Page({
         that.setData({
           f: res.data.reverse()
         });
+      },
+      fail(err) {
+        wx.showModal({
+          content: '服务连接异常，请检查后重试',
+          confirmText: '重试',
+          success: function(res) {
+            if (res.cancel) {
+              //点击取消,默认隐藏弹框
+            } else {
+              //点击确定
+              that.onLoad();
+            }
+          }
+        });
       }
     })
   },
@@ -88,6 +102,7 @@ Page({
         wx.showToast({
           title: '呼叫成功',
           icon: 'success',
+          mask: true,
           duration: 1000
         });
       },
@@ -95,6 +110,7 @@ Page({
         wx.showToast({
           title: '呼叫失败',
           icon: 'cancel',
+          mask: true,
           duration: 1000
         });
       }
