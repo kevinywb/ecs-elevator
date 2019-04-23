@@ -4,10 +4,6 @@
   font-size: 48rpx;
 }
 
-.btn-f {
-  width: 120rpx;
-}
-
 .btn-cmd {
   margin-top: 20rpx;
 }

@@ -8,7 +8,7 @@
   </view>
   <view class="row">
     <view class="col" wx:for="{{f}}" wx:key="index">
-      <button data-index="{{index}}" data-type="f" class="btn-f {{item.here?'here':''}} {{item.there?'there':''}}" bindtap="where">{{item.text}}</button>
+      <button data-index="{{index}}" class="{{item.here?'here':''}} {{item.there?'there':''}}" bindtap="where" style="width:{{item.width}}rpx">{{item.text}}</button>
     </view>
   </view>
   <view class="row">

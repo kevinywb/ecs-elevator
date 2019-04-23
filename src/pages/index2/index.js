@@ -103,7 +103,7 @@ Page({
           title: '呼叫成功',
           icon: 'success',
           mask: true,
-          duration: 1000
+          duration: 2000
         });
       },
       fail(err) {
@@ -111,7 +111,7 @@ Page({
           title: '呼叫失败',
           icon: 'cancel',
           mask: true,
-          duration: 1000
+          duration: 2000
         });
       }
     })

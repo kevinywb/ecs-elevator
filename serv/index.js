@@ -2,18 +2,14 @@ const serialport = require('serialport');
 const express = require('express');
 const log4js = require('log4js');
 const moment = require('moment');
-
+const conf = require('./config');
 
 /**
  * config
  */
-const port = 'COM2';
+const port = conf.port;
 const logger = log4js.getLogger();
 const today = moment().format('YYYY-MM-DD');
-const conf = {
-    f: [-1, 15], //起始楼层 - 最高楼层
-    out: [0] //除去楼层
-};
 
 /**
  * serialport
@@ -67,7 +63,8 @@ exp.get('/f', function (req, res) {
         f.push({
             key: i,
             val: int2hex(val),
-            text: i.toString().replace('-', 'B')
+            text: i.toString().replace('-', 'B'),
+            width: conf.width
         })
         val++;
     }
